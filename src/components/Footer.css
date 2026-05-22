@@ -9,7 +9,7 @@
   margin: 0 auto;
   padding: 48px 24px 36px;
   display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr;
+  grid-template-columns: 1.6fr 1fr;
   gap: 36px;
 }
 

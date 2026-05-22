@@ -96,7 +96,8 @@
 
 @media (max-width: 680px) {
   .site-header { padding: 22px 18px 104px; }
-  .site-header__tag { display: none; }
+  .site-header__bar { flex-wrap: wrap; gap: 12px; }
+  .site-header__tag { font-size: .72rem; padding: 6px 11px; }
   .site-header__hero { margin-top: 34px; }
   .site-header__title { font-size: 1.95rem; }
   .site-header__text { font-size: .98rem; }

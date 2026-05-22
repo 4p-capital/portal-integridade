@@ -28,7 +28,7 @@ export default function Header() {
               strokeLinejoin="round"
             />
           </svg>
-          Grupo · Integridade
+          EON - Integridade
         </span>
 
         <span className="site-header__tag">Canal 100% anônimo</span>

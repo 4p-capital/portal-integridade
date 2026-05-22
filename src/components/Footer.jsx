@@ -1,4 +1,3 @@
-import { lorem } from '../data/content'
 import './Footer.css'
 
 export default function Footer() {
@@ -7,20 +6,16 @@ export default function Footer() {
       <div className="site-footer__inner">
         <div className="site-footer__brand">
           <strong>Portal de Integridade</strong>
-          <p>{lorem.short}</p>
+          <p>
+            Canal oficial de ética e integridade para relatar, com segurança
+            e sigilo, condutas que violem nosso Código de Ética e Conduta.
+          </p>
         </div>
 
         <div className="site-footer__col">
           <span className="site-footer__title">Canal de Denúncias</span>
-          <p>Lorem ipsum dolor sit amet</p>
-          <p>consectetur@exemplo.com</p>
-          <p>0800 000 0000</p>
-        </div>
-
-        <div className="site-footer__col">
-          <span className="site-footer__title">Encarregado (DPO)</span>
-          <p>Lorem Ipsum</p>
-          <p>dpo@exemplo.com</p>
+          <p>Denúncias e dúvidas tratadas com sigilo e sem retaliação.</p>
+          <p>denuncia@eonbr.com</p>
         </div>
       </div>
 
@@ -31,7 +26,7 @@ export default function Footer() {
       </div>
 
       <div className="site-footer__bottom">
-        <span>© {new Date().getFullYear()} Grupo · Lorem Ipsum. Todos os direitos reservados.</span>
+        <span>© {new Date().getFullYear()} EON - Todos os direitos reservados</span>
         <span>Denúncia 100% anônima e sigilosa</span>
       </div>
     </footer>
