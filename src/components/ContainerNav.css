@@ -1,0 +1,59 @@
+.cnav {
+  display: flex;
+  gap: 2px;
+  padding: 8px 14px 0;
+  /* barra grafite escura — destaca o menu sobre o card branco */
+  background: linear-gradient(180deg, var(--brand-800), var(--brand-900));
+  border-bottom: 1px solid rgba(255, 255, 255, .09);
+  overflow-x: auto;
+  scrollbar-width: none;            /* Firefox */
+}
+
+.cnav::-webkit-scrollbar { display: none; }   /* Chrome / Safari */
+
+.cnav__btn {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  font-size: .92rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, .56);
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 15px 17px;
+  border-radius: 10px 10px 0 0;
+  position: relative;
+  transition: color .18s ease, background .18s ease;
+}
+
+.cnav__btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, .06);
+}
+
+.cnav__btn:focus-visible {
+  outline: 2px solid var(--accent-on-dark);
+  outline-offset: -3px;
+}
+
+.cnav__btn.is-active {
+  color: var(--accent-on-dark);
+}
+
+/* indicador da aba ativa */
+.cnav__btn.is-active::after {
+  content: '';
+  position: absolute;
+  left: 13px;
+  right: 13px;
+  bottom: -1px;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+  background: var(--accent-on-dark);
+  box-shadow: 0 0 12px rgba(188, 171, 143, .45);
+}
+
+@media (max-width: 680px) {
+  .cnav { padding: 6px 8px 0; }
+  .cnav__btn { padding: 13px 13px; font-size: .86rem; }
+}

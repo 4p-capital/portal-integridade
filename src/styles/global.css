@@ -1,0 +1,114 @@
+/* ============================================================
+   Tokens de design
+   ============================================================ */
+:root {
+  /* superfícies escuras — grafite neutro (substitui o navy) */
+  --brand-900: #1d1d1f;   /* grafite profundo — hero/menu/rodapé/protocol */
+  --brand-800: #2a2a2d;   /* grafite médio */
+  --brand-700: #38383c;   /* grafite claro — topo de gradientes */
+
+  /* acento — DOURADO EON (#bcab8f) e tons derivados p/ contraste */
+  --gold: #8c7245;            /* dourado médio — barra de título (fundo claro) */
+  --gold-strong: #7a6238;     /* dourado escuro — botões, links, ícones, foco (fundo claro) */
+  --gold-600: #655231;        /* dourado mais escuro — hover */
+  --gold-soft: #f1ebdf;       /* tint claro do dourado EON — chips/eyebrow/info-box */
+  --gold-on-dark: #bcab8f;    /* dourado EON puro — texto/detalhe sobre grafite */
+
+  /* aliases de interação — apontam para o dourado (mantêm os nomes --accent*) */
+  --accent: var(--gold-strong);
+  --accent-600: var(--gold-600);
+  --accent-soft: var(--gold-soft);
+  --accent-on-dark: var(--gold-on-dark);
+
+  /* feedback — verde funcional, não é cor de marca */
+  --success: #1f9d6b;
+  --success-soft: #e6f6ef;
+  --warning-soft: #fff4e0;
+
+  /* texto — neutralizado (remove a tinta navy) */
+  --ink: #1f2225;
+  --ink-soft: #62656b;
+  --ink-faint: #9a9da3;
+
+  /* superfícies claras — neutralizado (remove a tinta azul-cinza) */
+  --bg: #f1f1f2;
+  --card: #ffffff;
+  --line: #e5e5e7;
+  --line-soft: #f1f1f2;
+  --surface-2: #f7f7f8;       /* fundo de cartão (substitui #fafbfd / #f7f9fd) */
+
+  /* forma */
+  --radius: 18px;
+  --radius-md: 12px;
+  --radius-sm: 9px;
+  --shadow-sm: 0 1px 2px rgba(20, 20, 20, .06), 0 1px 3px rgba(20, 20, 20, .07);
+  --shadow-md: 0 10px 30px rgba(20, 20, 20, .10);
+  --shadow-lg: 0 30px 70px rgba(20, 20, 20, .18);
+
+  --maxw: 1100px;
+  --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* ============================================================
+   Reset
+   ============================================================ */
+*,
+*::before,
+*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a { color: var(--accent); }
+
+button { font-family: inherit; }
+
+::selection { background: var(--accent); color: #fff; }
+
+/* ============================================================
+   Layout — app + container principal
+   ============================================================ */
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container-wrap {
+  flex: 1;
+  padding: 0 24px 84px;
+  margin-top: -72px;            /* o card sobrepõe o header */
+}
+
+.container-card {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+/* o conteúdo trocado a cada navegação — animação "container change" */
+.container-body {
+  padding: 46px 52px 56px;
+  animation: containerChange .42s cubic-bezier(.22, .61, .36, 1);
+}
+
+@keyframes containerChange {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 680px) {
+  .container-wrap { padding: 0 14px 56px; }
+  .container-body { padding: 32px 22px 38px; }
+}

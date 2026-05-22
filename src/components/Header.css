@@ -1,0 +1,103 @@
+.site-header {
+  position: relative;
+  overflow: hidden;
+  padding: 28px 24px 108px;
+  color: #fff;
+  background:
+    radial-gradient(880px 360px at 82% -16%, rgba(255, 255, 255, .06), transparent 62%),
+    linear-gradient(158deg, var(--brand-700) 0%, var(--brand-900) 100%);
+}
+
+/* linha decorativa sutil no rodapé do header */
+.site-header::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .22), transparent);
+}
+
+/* ---- barra superior ---- */
+.site-header__bar {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.site-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-weight: 700;
+  font-size: .98rem;
+  letter-spacing: .2px;
+}
+
+.site-header__logo {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+}
+
+.site-header__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  font-size: .78rem;
+  font-weight: 600;
+  letter-spacing: .3px;
+  border-radius: 999px;
+  color: var(--gold-on-dark);
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .16);
+}
+
+.site-header__tag::before {
+  content: '';
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 4px rgba(74, 222, 128, .22);
+}
+
+/* ---- texto principal ---- */
+.site-header__hero {
+  max-width: var(--maxw);
+  margin: 50px auto 0;
+}
+
+.site-header__eyebrow {
+  font-size: .8rem;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--gold-on-dark);
+  margin-bottom: 12px;
+}
+
+.site-header__title {
+  font-size: 2.7rem;
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.022em;
+}
+
+.site-header__text {
+  margin-top: 16px;
+  max-width: 62ch;
+  font-size: 1.06rem;
+  color: rgba(255, 255, 255, .76);
+}
+
+@media (max-width: 680px) {
+  .site-header { padding: 22px 18px 104px; }
+  .site-header__tag { display: none; }
+  .site-header__hero { margin-top: 34px; }
+  .site-header__title { font-size: 1.95rem; }
+  .site-header__text { font-size: .98rem; }
+}
