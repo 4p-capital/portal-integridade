@@ -322,7 +322,7 @@ Os membros do Comitê:
 
 A EON poderá atualizar esta Política a qualquer momento, em razão de mudanças legais, regulatórias, técnicas ou operacionais. Alterações relevantes serão comunicadas por meio de aviso destacado no Portal.
 
-A versão vigente estará sempre disponível em [INSERIR URL].
+A versão vigente estará sempre disponível em [https://integridade.eonbr.com](https://integridade.eonbr.com).
 
 ---
 
@@ -348,7 +348,7 @@ Esta Política é regida pela legislação brasileira. Fica eleito o foro da Com
 | **E-mail do DPO** | tecnologia@eonbr.com |
 | **Canal institucional** | denuncias@eonbr.com |
 | **E-mail de TI** | tecnologia@eonbr.com |
-| **Empresa** | EON — [INSERIR razão social oficial] |
+| **Empresa** | EON Incorporadora |
 | **CNPJ** | 17.958.805/0001-45 |
 | **Endereço** | Setor de Autarquias Sul, Quadra 4, Bloco A, Sala 602 — Asa Sul, Brasília/DF, CEP 70070-938 |
 | **ANPD** | https://www.gov.br/anpd/pt-br |

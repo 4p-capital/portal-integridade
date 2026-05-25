@@ -9,7 +9,7 @@
 
 ## 1. Apresentação
 
-A EON, **inscrita no CNPJ sob o nº 17.958.805/0001-45**, com sede em **Setor de Autarquias Sul, Quadra 4, Bloco A, Sala 602 — Asa Sul, Brasília/DF, CEP 70070-938** ("EON", "nós" ou "Empresa"), valoriza a privacidade e a proteção dos dados pessoais dos visitantes do **Portal de Integridade** (acessível em [INSERIR DOMÍNIO, ex.: `https://integridade.eonbr.com`]).
+A **EON Incorporadora**, **inscrita no CNPJ sob o nº 17.958.805/0001-45**, com sede em **Setor de Autarquias Sul, Quadra 4, Bloco A, Sala 602 — Asa Sul, Brasília/DF, CEP 70070-938** ("EON", "nós" ou "Empresa"), valoriza a privacidade e a proteção dos dados pessoais dos visitantes do **Portal de Integridade** (acessível em [https://integridade.eonbr.com](https://integridade.eonbr.com)).
 
 Esta Política de Privacidade descreve, de forma clara e transparente, **quais dados coletamos quando você navega no Portal**, **com que finalidade**, **por quanto tempo armazenamos** e **quais são os seus direitos** como titular de dados, em conformidade com a **Lei nº 13.709/2018 (Lei Geral de Proteção de Dados Pessoais — LGPD)** e demais normas aplicáveis.
 
@@ -177,7 +177,7 @@ Apesar das medidas implementadas, nenhum sistema é absolutamente imune a incide
 
 A EON poderá atualizar esta Política de Privacidade a qualquer momento, em razão de mudanças legais, regulatórias, técnicas ou operacionais. Alterações relevantes serão comunicadas por meio de aviso destacado no Portal.
 
-A versão vigente estará sempre disponível em [INSERIR URL].
+A versão vigente estará sempre disponível em [https://integridade.eonbr.com](https://integridade.eonbr.com).
 
 ---
 
@@ -196,7 +196,7 @@ Em caso de dúvidas sobre esta Política ou sobre o tratamento dos seus dados pe
 | **Encarregado (DPO)** | Guilherme Rocha |
 | **E-mail do DPO** | tecnologia@eonbr.com |
 | **E-mail institucional** | tecnologia@eonbr.com |
-| **Empresa** | EON — [INSERIR razão social oficial] |
+| **Empresa** | EON Incorporadora |
 | **CNPJ** | 17.958.805/0001-45 |
 | **Endereço** | Setor de Autarquias Sul, Quadra 4, Bloco A, Sala 602 — Asa Sul, Brasília/DF, CEP 70070-938 |
 
