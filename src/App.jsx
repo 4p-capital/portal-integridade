@@ -9,18 +9,21 @@ import CodeOfConductSection from './sections/CodeOfConductSection'
 import ReportChannelSection from './sections/ReportChannelSection'
 import CommitteeSection from './sections/CommitteeSection'
 import LgpdSection from './sections/LgpdSection'
-import DocumentationSection from './sections/DocumentationSection'
+// import DocumentationSection from './sections/DocumentationSection'
 
 import './sections/sections.css'
 
 /* Cada aba aponta para o componente da sua seção. */
+/* "documentacao" desabilitado até subirmos os PDFs reais — para
+   reabilitar, descomentar a linha abaixo e o item em
+   src/data/content.js (navItems). */
 const SECTIONS = {
   etica: EthicsSection,
   codigo: CodeOfConductSection,
   canal: ReportChannelSection,
   comite: CommitteeSection,
   lgpd: LgpdSection,
-  documentacao: DocumentationSection,
+  // documentacao: DocumentationSection,
 }
 
 export default function App() {

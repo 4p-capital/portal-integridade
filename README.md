@@ -60,8 +60,9 @@ portal-integridade/
 ## Observações sobre anonimato
 
 O formulário de denúncia **não coleta nome, e-mail ou qualquer dado de
-identificação**. Ao registrar uma denúncia é gerado um **protocolo** que permite
-acompanhar o caso de forma anônima.
+identificação** e **não gera protocolo de acompanhamento** — modelo
+*fire-and-forget* para reforçar o anonimato.
 
-Este template é apenas *front-end*. Para uso real, conecte o formulário a um
-backend que não registre IP/metadados de identificação.
+O backend (Supabase Edge Function) descarta o IP do denunciante antes
+de gravar a denúncia. Para uso em produção, conecte o formulário à
+Edge Function correspondente.

@@ -447,4 +447,16 @@
   .report-form__actions .btn { width: 100%; }
   .track-form { flex-direction: column; align-items: stretch; }
   .track-form .btn { width: 100%; }
+
+  /* Evita o auto-zoom do iOS Safari ao focar inputs (gatilho < 16px). */
+  .field input,
+  .field select,
+  .field textarea { font-size: 16px; }
+
+  /* Tap target confortável (≥36px) para remover anexo no toque. */
+  .file-list__remove {
+    min-width: 36px;
+    min-height: 36px;
+    padding: 8px;
+  }
 }

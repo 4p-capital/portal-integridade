@@ -289,12 +289,20 @@
 }
 
 .btn--primary {
-  background: var(--accent);
+  background: var(--success);
   color: #fff;
-  box-shadow: 0 6px 18px rgba(122, 98, 56, .32);
+  box-shadow: 0 6px 18px rgba(31, 157, 107, .32);
 }
 
-.btn--primary:hover { background: var(--accent-600); transform: translateY(-1px); }
+.btn--primary:hover { background: #198759; transform: translateY(-1px); }
+
+.btn--primary:disabled,
+.btn--primary[aria-busy="true"] {
+  opacity: .65;
+  cursor: not-allowed;
+  transform: none;
+  animation: none;
+}
 
 .btn--ghost {
   background: transparent;
@@ -304,8 +312,43 @@
 
 .btn--ghost:hover { border-color: var(--ink-faint); color: var(--ink); }
 
+/* Spinner do botão em estado de envio (usado quando aria-busy). */
+.btn__spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  margin-right: 9px;
+  vertical-align: -2px;
+  border: 2px solid rgba(255, 255, 255, .4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: btn-spin .7s linear infinite;
+}
+
+@keyframes btn-spin { to { transform: rotate(360deg); } }
+
+/* Pulse de chamada — usado no CTA principal da página de Ética. */
+@keyframes btn-pulse {
+  0%   { box-shadow: 0 6px 18px rgba(31, 157, 107, .32), 0 0 0 0   rgba(31, 157, 107, .45); }
+  70%  { box-shadow: 0 6px 18px rgba(31, 157, 107, .32), 0 0 0 14px rgba(31, 157, 107, 0); }
+  100% { box-shadow: 0 6px 18px rgba(31, 157, 107, .32), 0 0 0 0   rgba(31, 157, 107, 0); }
+}
+
+.btn--pulse { animation: btn-pulse 2.2s ease-out infinite; }
+.btn--pulse:hover { animation: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn--pulse { animation: none; }
+}
+
 @media (max-width: 680px) {
   .section-title { font-size: 1.5rem; }
   .pillar-grid,
   .doc-grid { grid-template-columns: 1fr; }
+
+  /* Botões de call-to-action ocupam 100% para hierarquia clara
+     no toque; gap maior evita que o halo do pulse encoste no botão
+     debaixo quando empilhados. */
+  .section-cta { gap: 16px; }
+  .section-cta .btn { width: 100%; text-align: center; }
 }

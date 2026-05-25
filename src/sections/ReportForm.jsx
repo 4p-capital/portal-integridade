@@ -1,17 +1,7 @@
 import { useState } from 'react'
-import { groupCompanies, reportCategories, bondTypes, lorem } from '../data/content'
+import { reportCategories, bondTypes } from '../data/content'
 import { IconShield, IconLock, IconCheck, IconUpload, IconX, IconDoc } from './icons'
 import './ReportForm.css'
-
-/* Gera um protocolo anônimo — único meio de acompanhar a denúncia. */
-function makeProtocol() {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789'
-  let code = ''
-  for (let i = 0; i < 6; i++) {
-    code += chars[Math.floor(Math.random() * chars.length)]
-  }
-  return `INT-${new Date().getFullYear()}-${code}`
-}
 
 /* Campos de texto do formulário (os anexos ficam em estado separado). */
 const EMPTY = {
@@ -27,6 +17,11 @@ const EMPTY = {
 const ACCEPT = 'image/*,video/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt'
 const MAX_TOTAL = 20 * 1024 * 1024 // 20 MB
 
+/* Endpoint da Edge Function que recebe a denúncia. */
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
+const ENDPOINT = `${SUPABASE_URL}/functions/v1/denuncia-receber`
+
 function formatSize(bytes) {
   if (bytes < 1024) return `${bytes} B`
   if (bytes < 1024 * 1024) return `${Math.round(bytes / 1024)} KB`
@@ -34,22 +29,50 @@ function formatSize(bytes) {
 }
 
 export default function ReportForm() {
-  const [mode, setMode] = useState('new')          // 'new' | 'track'
-
-  // --- registro de denúncia ---
   const [form, setForm] = useState(EMPTY)
-  const [files, setFiles] = useState([])           // anexos (prova)
+  const [files, setFiles] = useState([])
   const [fileError, setFileError] = useState('')
   const [dragOver, setDragOver] = useState(false)
-  const [protocol, setProtocol] = useState(null)
-  const [copied, setCopied] = useState(false)
-
-  // --- acompanhamento ---
-  const [trackInput, setTrackInput] = useState('')
-  const [tracked, setTracked] = useState(null)
+  const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
   const update = (field) => (e) =>
     setForm((prev) => ({ ...prev, [field]: e.target.value }))
+
+  /* Máscara dd/mm/aaaa: só dígitos, insere as barras automaticamente. */
+  function updateQuando(e) {
+    const digits = e.target.value.replace(/\D/g, '').slice(0, 8)
+    let masked = digits
+    if (digits.length > 4) {
+      masked = `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`
+    } else if (digits.length > 2) {
+      masked = `${digits.slice(0, 2)}/${digits.slice(2)}`
+    }
+    setForm((prev) => ({ ...prev, quando: masked }))
+  }
+
+  /* Converte 'dd/mm/aaaa' em ISO 'aaaa-mm-dd', ou devolve mensagem de erro. */
+  function parseQuando(s) {
+    if (!s) return { iso: null }
+    const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(s)
+    if (!m) return { erro: 'Data inválida — use o formato dd/mm/aaaa.' }
+    const [, dia, mes, ano] = m
+    const iso = `${ano}-${mes}-${dia}`
+    const d = new Date(`${iso}T12:00:00`)
+    if (
+      Number.isNaN(d.getTime()) ||
+      d.getFullYear() !== Number(ano) ||
+      d.getMonth() + 1 !== Number(mes) ||
+      d.getDate() !== Number(dia)
+    ) {
+      return { erro: 'Data inválida.' }
+    }
+    const hoje = new Date()
+    hoje.setHours(23, 59, 59, 999)
+    if (d > hoje) return { erro: 'A data não pode ser futura.' }
+    return { iso }
+  }
 
   /* ---- anexos ---- */
   function addFiles(fileList) {
@@ -76,85 +99,77 @@ export default function ReportForm() {
     addFiles(e.dataTransfer.files)
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    const protocolo = makeProtocol()
+    if (submitting) return
+
+    /* Valida a data antes de bloquear o botão (campo é opcional). */
+    const { iso: dataISO, erro: dataErro } = parseQuando(form.quando)
+    if (dataErro) {
+      setSubmitError(dataErro)
+      return
+    }
 
     /* --------------------------------------------------------------
-       Dados prontos para o backend: registrar no banco de dados e
-       disparar o e-mail para o Comitê de Ética. Como há anexos,
-       o envio usa FormData (multipart/form-data).
-       As chaves abaixo correspondem às colunas do banco / campos
-       do e-mail.
+       A Edge Function "denuncia-receber" descarta o IP do denunciante,
+       grava a denúncia no banco e dispara o e-mail para o Comitê de
+       Ética. Como há anexos, o envio usa FormData (multipart/form-data).
     -------------------------------------------------------------- */
     const dados = new FormData()
-    dados.append('protocolo', protocolo)
     dados.append('empresa', form.empresa)
     dados.append('vinculo', form.vinculo)
     dados.append('categoria', form.categoria)
-    dados.append('data_ocorrido', form.quando)   // opcional
-    dados.append('local_setor', form.local)      // opcional
+    if (dataISO) dados.append('data_ocorrido', dataISO)
+    if (form.local) dados.append('local_setor', form.local)
     dados.append('relato', form.relato)
-    dados.append('registrado_em', new Date().toISOString())
     files.forEach((arquivo) => dados.append('anexos', arquivo, arquivo.name))
 
-    // TODO: integrar com o backend — ele grava no banco e envia o e-mail.
-    // await fetch('/api/denuncias', { method: 'POST', body: dados })
+    setSubmitting(true)
+    setSubmitError('')
 
-    setProtocol(protocolo)
-    setCopied(false)
-    window.scrollTo({ top: document.querySelector('.report')?.offsetTop - 40, behavior: 'smooth' })
+    try {
+      const res = await fetch(ENDPOINT, {
+        method: 'POST',
+        headers: { apikey: SUPABASE_ANON_KEY },
+        body: dados,
+      })
+      if (!res.ok) throw new Error(`HTTP ${res.status}`)
+      const data = await res.json().catch(() => ({}))
+      if (!data?.ok) throw new Error('resposta inesperada')
+
+      setSubmitted(true)
+      window.scrollTo({
+        top: document.querySelector('.report')?.offsetTop - 40,
+        behavior: 'smooth',
+      })
+    } catch (err) {
+      setSubmitError(
+        'Não foi possível enviar sua denúncia agora. Verifique sua conexão e tente novamente em alguns instantes.',
+      )
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   function resetForm() {
     setForm(EMPTY)
     setFiles([])
     setFileError('')
-    setProtocol(null)
-    setCopied(false)
-  }
-
-  function copyProtocol() {
-    if (navigator.clipboard) navigator.clipboard.writeText(protocol)
-    setCopied(true)
-  }
-
-  function handleTrack(e) {
-    e.preventDefault()
-    if (trackInput.trim()) setTracked(trackInput.trim().toUpperCase())
+    setSubmitError('')
+    setSubmitted(false)
   }
 
   return (
     <div className="report" id="formulario">
       <div className="report__head">
         <h3 className="report__heading">Registrar denúncia</h3>
-        <p className="report__subheading">{lorem.short}</p>
+        <p className="report__subheading">
+          Preencha o formulário abaixo. Você não precisa se identificar.
+        </p>
       </div>
 
-      {/* alterna entre registrar e acompanhar */}
-      <div className="report__tabs" role="tablist">
-        <button
-          type="button"
-          role="tab"
-          aria-selected={mode === 'new'}
-          className={'report__tab' + (mode === 'new' ? ' is-active' : '')}
-          onClick={() => setMode('new')}
-        >
-          Nova denúncia
-        </button>
-        <button
-          type="button"
-          role="tab"
-          aria-selected={mode === 'track'}
-          className={'report__tab' + (mode === 'track' ? ' is-active' : '')}
-          onClick={() => setMode('track')}
-        >
-          Acompanhar denúncia
-        </button>
-      </div>
-
-      {/* ----- modo: nova denúncia ----- */}
-      {mode === 'new' && !protocol && (
+      {/* ----- formulário ----- */}
+      {!submitted && (
         <div className="report__panel">
           <div className="anon-banner">
             <span className="anon-banner__icon"><IconShield /></span>
@@ -162,7 +177,8 @@ export default function ReportForm() {
               <strong>Esta denúncia é 100% anônima</strong>
               <p>
                 Não solicitamos nome, e-mail ou telefone e não registramos
-                endereço de IP. {lorem.short}
+                endereço de IP. Sua identidade é preservada do início ao fim
+                do processo.
               </p>
             </div>
           </div>
@@ -171,18 +187,16 @@ export default function ReportForm() {
             {/* Empresa do grupo */}
             <div className="field">
               <label htmlFor="empresa">Empresa do grupo *</label>
-              <select
+              <input
                 id="empresa"
                 name="empresa"
+                type="text"
                 required
+                maxLength={200}
+                placeholder="Nome da empresa do grupo"
                 value={form.empresa}
                 onChange={update('empresa')}
-              >
-                <option value="" disabled>Selecione…</option>
-                {groupCompanies.map((c) => (
-                  <option key={c} value={c}>{c}</option>
-                ))}
-              </select>
+              />
             </div>
 
             {/* Seu vínculo */}
@@ -225,9 +239,14 @@ export default function ReportForm() {
               <input
                 id="quando"
                 name="data_ocorrido"
-                type="date"
+                type="text"
+                inputMode="numeric"
+                autoComplete="off"
+                placeholder="dd/mm/aaaa"
+                maxLength={10}
+                pattern="\d{2}/\d{2}/\d{4}"
                 value={form.quando}
-                onChange={update('quando')}
+                onChange={updateQuando}
               />
             </div>
 
@@ -314,92 +333,52 @@ export default function ReportForm() {
               )}
             </div>
 
+            {submitError && (
+              <p className="field__hint field__hint--error" role="alert">
+                {submitError}
+              </p>
+            )}
+
             <div className="report-form__actions">
               <p className="report-form__note">
                 <IconLock style={{ width: 15, height: 15, verticalAlign: -3 }} />
                 {' '}Envio criptografado e sigiloso.
               </p>
-              <button type="submit" className="btn btn--primary">
-                Enviar denúncia
+              <button
+                type="submit"
+                className="btn btn--primary"
+                disabled={submitting}
+                aria-busy={submitting}
+              >
+                {submitting && <span className="btn__spinner" aria-hidden="true" />}
+                {submitting ? 'Enviando…' : 'Enviar denúncia'}
               </button>
             </div>
           </form>
         </div>
       )}
 
-      {/* ----- modo: nova denúncia — confirmação ----- */}
-      {mode === 'new' && protocol && (
+      {/* ----- confirmação ----- */}
+      {submitted && (
         <div className="report__panel">
           <div className="report-done">
             <span className="report-done__icon"><IconCheck /></span>
             <h4>Denúncia registrada com sucesso</h4>
             <p>
-              Guarde o protocolo abaixo — ele é o <strong>único meio</strong> de
-              acompanhar a denúncia mantendo seu anonimato.
+              Sua denúncia foi enviada com segurança ao Comitê de Ética e
+              Integridade da EON. Em respeito ao seu anonimato, não
+              registramos qualquer dado que permita identificá-lo(a) e não
+              há canal de acompanhamento ou consulta posterior.
             </p>
-
-            <div className="protocol-box">
-              <div>
-                <span className="protocol-box__label">Protocolo</span>
-                <span className="protocol-box__code">{protocol}</span>
-              </div>
-              <button type="button" className="copy-btn" onClick={copyProtocol}>
-                {copied ? 'Copiado ✓' : 'Copiar'}
-              </button>
-            </div>
-
-            <p className="report-done__hint">{lorem.short}</p>
+            <p className="report-done__hint">
+              A apuração será conduzida internamente conforme as nossas
+              políticas. Agradecemos pela sua contribuição.
+            </p>
 
             <button type="button" className="btn btn--ghost" onClick={resetForm}>
               Registrar nova denúncia
             </button>
           </div>
-        </div>
-      )}
-
-      {/* ----- modo: acompanhar ----- */}
-      {mode === 'track' && (
-        <div className="report__panel">
-          <form className="track-form" onSubmit={handleTrack}>
-            <div className="field field--full">
-              <label htmlFor="track">Informe o número do protocolo</label>
-              <input
-                id="track"
-                type="text"
-                placeholder="INT-2026-XXXXXX"
-                value={trackInput}
-                onChange={(e) => setTrackInput(e.target.value)}
-              />
-            </div>
-            <button type="submit" className="btn btn--primary">Consultar</button>
-          </form>
-
-          {tracked && (
-            <div className="track-result">
-              <div className="track-result__head">
-                <span>Protocolo</span>
-                <strong>{tracked}</strong>
-              </div>
-              <ol className="timeline">
-                <li className="is-done">
-                  <strong>Denúncia recebida</strong>
-                  <span>{lorem.short}</span>
-                </li>
-                <li className="is-done">
-                  <strong>Em triagem</strong>
-                  <span>{lorem.short}</span>
-                </li>
-                <li className="is-current">
-                  <strong>Em análise</strong>
-                  <span>{lorem.short}</span>
-                </li>
-                <li>
-                  <strong>Concluída</strong>
-                  <span>{lorem.short}</span>
-                </li>
-              </ol>
-            </div>
-          )}
         </div>
       )}
     </div>

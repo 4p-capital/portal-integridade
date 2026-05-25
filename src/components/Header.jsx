@@ -1,4 +1,3 @@
-import { lorem } from '../data/content'
 import './Header.css'
 
 /* Cabeçalho do site — exibe apenas texto (marca + chamada). */
@@ -38,7 +37,27 @@ export default function Header() {
       <div className="site-header__hero">
         <p className="site-header__eyebrow">Programa de Integridade</p>
         <h1 className="site-header__title">Portal de Integridade</h1>
-        <p className="site-header__text">{lorem.lead}</p>
+        <p className="site-header__text">
+          Acreditamos que o crescimento sustentável de uma empresa está
+          diretamente ligado à ética, transparência, responsabilidade e
+          respeito em todas as relações construídas ao longo da nossa
+          trajetória. Mais do que diretrizes corporativas, esses princípios
+          representam valores inegociáveis que orientam nossas decisões,
+          condutas e a forma como nos relacionamos com colaboradores,
+          clientes, parceiros e a sociedade.
+        </p>
+        <p className="site-header__text">
+          Com o objetivo de fortalecer a cultura de integridade da nossa
+          organização, reunimos abaixo nossas políticas internas, códigos de
+          conduta, diretrizes de compliance, canais de comunicação e demais
+          informações essenciais para promoção de um ambiente íntegro, seguro
+          e responsável.
+        </p>
+        <p className="site-header__text">
+          A integridade é um compromisso diário e coletivo. Por isso, contamos
+          com a participação de todos na construção de um ambiente alinhado
+          aos valores que representam a história da empresa.
+        </p>
       </div>
     </header>
   )

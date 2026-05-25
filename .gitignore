@@ -22,3 +22,9 @@ pnpm-debug.log*
 .idea
 .DS_Store
 Thumbs.db
+
+# segredos / config local
+.mcp.json
+.env
+.env.*
+!.env.example
