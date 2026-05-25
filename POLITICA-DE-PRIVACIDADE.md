@@ -7,6 +7,21 @@
 
 ---
 
+## Em resumo
+
+> Este resumo é um guia rápido para leitura, não substitui o texto completo da Política abaixo. Em caso de divergência, prevalece o texto integral.
+
+- **Quem somos:** EON Incorporadora (CNPJ 17.958.805/0001-45). Esta Política se aplica ao Portal de Integridade ([https://integridade.eonbr.com](https://integridade.eonbr.com)).
+- **O que coletamos de quem só navega:** apenas dados técnicos automáticos do servidor (IP, *user-agent*, URL), usados para segurança e operação. Sem cookies próprios, sem analytics, sem perfilamento.
+- **Operadores:** apenas os essenciais (Vercel para hospedagem, Google LLC para fonte tipográfica via Google Fonts), todos vinculados por DPA.
+- **Onde ficam:** infraestrutura com presença no Brasil (São Paulo). Transferência internacional residual coberta por SCCs e DPAs.
+- **Decisões automatizadas:** o Portal **não submete visitantes a qualquer tratamento automatizado de decisão** (art. 20 LGPD).
+- **Seus direitos:** acesso, correção, eliminação e demais direitos do art. 18 da LGPD. Resposta em até 15 dias úteis.
+- **Para registro de denúncias:** o tratamento dos dados é regido pela **Política de Proteção de Dados do Canal de Denúncias**, complementar a esta.
+- **Fale com o DPO:** Guilherme Rocha — `tecnologia@eonbr.com`.
+
+---
+
 ## 1. Apresentação
 
 A **EON Incorporadora**, **inscrita no CNPJ sob o nº 17.958.805/0001-45**, com sede em **Setor de Autarquias Sul, Quadra 4, Bloco A, Sala 602 — Asa Sul, Brasília/DF, CEP 70070-938** ("EON", "nós" ou "Empresa"), valoriza a privacidade e a proteção dos dados pessoais dos visitantes do **Portal de Integridade** (acessível em [https://integridade.eonbr.com](https://integridade.eonbr.com)).
@@ -63,9 +78,18 @@ Quando você visita o Portal, **mesmo sem se cadastrar ou interagir com formulá
 
 Ao registrar uma denúncia através do canal disponível no Portal, **o IP do visitante NÃO é registrado** (em conformidade com o princípio do anonimato declarado). Todo o tratamento decorrente do registro de denúncias é regido pela **Política de Proteção de Dados do Canal de Denúncias**.
 
-### 4.3 Cookies e tecnologias similares
+### 4.3 Cookies e tecnologias de rastreamento
 
-O Portal **não utiliza cookies próprios, Google Analytics, Meta Pixel, ferramentas de heatmap ou qualquer tecnologia de rastreamento**.
+Por escolha deliberada de design — alinhada à promessa de anonimato do Portal —, **nenhuma das categorias usuais de cookies ou tecnologias de rastreamento é utilizada**:
+
+| Categoria | Status no Portal | Observação |
+|---|---|---|
+| **Estritamente necessários** | Não utilizados | O Portal opera sem sessão persistente. |
+| **Funcionais** (preferências, idioma) | Não utilizados | Preferências de exibição são detectadas em tempo real pelo navegador. |
+| **Analíticos** (Google Analytics, Plausible, Matomo, etc.) | Não utilizados | Não há medição de comportamento de visitantes. |
+| **Marketing / segmentação** (Meta Pixel, ad networks, retargeting) | Não utilizados | O Portal não veicula publicidade nem alimenta sistemas de anúncio. |
+
+Da mesma forma, o Portal **não utiliza** ferramentas de *heatmap*, *session replay*, *fingerprinting* de dispositivo ou qualquer outra tecnologia de identificação ou rastreamento de visitantes.
 
 ### 4.4 Recursos de terceiros (fontes tipográficas)
 
@@ -129,6 +153,8 @@ A LGPD, em seu **artigo 18**, garante a você os seguintes direitos sobre seus d
 9. **Revogação** do consentimento, quando aplicável
 10. **Revisão de decisões automatizadas** (não aplicável ao Portal, que não realiza tratamento automatizado de decisão)
 11. **Petição perante a ANPD** contra o controlador
+
+> **Sobre o direito previsto no item 10 (art. 20 LGPD):** o Portal **não submete visitantes ou denúncias a qualquer tratamento automatizado de decisão** — não há *scoring*, triagem, classificação, perfilamento, priorização ou qualquer outra forma de decisão automatizada. Toda análise relacionada a denúncias é realizada exclusivamente por membros humanos do Comitê de Ética e Integridade. Caso esse modelo seja alterado no futuro, esta Política será atualizada com destaque e a mudança será comunicada antes de produzir efeitos.
 
 ### 8.1 Como exercer seus direitos
 

@@ -7,6 +7,23 @@
 
 ---
 
+## Em resumo
+
+> Este resumo é um guia rápido para leitura, não substitui o texto completo da Política abaixo. Em caso de divergência, prevalece o texto integral.
+
+- **Quem somos:** EON Incorporadora (CNPJ 17.958.805/0001-45). Esta Política regula o tratamento de dados das **denúncias** registradas no Portal de Integridade.
+- **Anonimato é a regra:** o canal **não solicita** nome, e-mail, telefone, CPF ou qualquer outro dado de identificação do denunciante. O **IP é descartado** no servidor antes da gravação.
+- **Sem cookies, sem perfilamento, sem IA:** o canal **não utiliza** cookies de rastreamento, não cria perfis e não treina modelos de inteligência artificial com seus dados.
+- **Quem lê as denúncias:** apenas os 4 (quatro) diretores da EON, integrantes do **Comitê de Ética e Integridade**, vinculados a Termo de Confidencialidade específico.
+- **Decisões automatizadas:** denúncias **não passam por triagem, classificação ou priorização automatizada**. Toda análise é humana (art. 20 LGPD).
+- **Onde ficam:** banco de dados em datacenter no **Brasil (São Paulo)**, gerenciado por Supabase Inc., com criptografia em repouso e em trânsito.
+- **Por quanto tempo:** **5 (cinco) anos** a contar da conclusão da apuração (Lei Anticorrupção, art. 25).
+- **Não retaliação:** retaliar denunciante de boa-fé é proibido e configura violação grave do Código de Ética.
+- **Dúvidas ou direitos:** DPO Guilherme Rocha — `tecnologia@eonbr.com` (resposta em até 15 dias úteis).
+- **Petição:** você pode reclamar à **ANPD** a qualquer momento.
+
+---
+
 ## 1. Apresentação e escopo
 
 Esta **Política de Proteção de Dados do Canal de Denúncias** ("Política") regula o tratamento de dados pessoais decorrente do uso do **Canal de Denúncias** disponibilizado pela EON no Portal de Integridade.
@@ -124,6 +141,8 @@ Os dados tratados no Canal de Denúncias são utilizados **exclusivamente** para
 6. Atendimento a requisições de autoridades competentes
 
 A EON **não utiliza** os dados das denúncias para finalidades comerciais, marketing, treinamento de inteligência artificial, perfilamento ou qualquer outra finalidade alheia às listadas acima.
+
+> **Ausência de decisões automatizadas (art. 20 LGPD):** as denúncias **não são submetidas a triagem, classificação, priorização ou qualquer outra forma de tratamento automatizado de decisão**. Toda análise é realizada por membros humanos do Comitê de Ética e Integridade. Caso esse modelo venha a incluir apoio de sistemas automatizados em qualquer etapa futura, esta Política será atualizada com destaque e a alteração comunicada antes de produzir efeitos.
 
 ---
 
@@ -251,6 +270,18 @@ O denunciante tem o direito de não se identificar. A apuração da denúncia an
 ### 13.3 Política de não retaliação
 
 A EON proíbe expressamente qualquer forma de retaliação contra denunciantes de boa-fé, conforme **art. 7º, IV do Decreto 11.129/2022** e **art. 23-A da Lei 14.457/2022**. Atos de retaliação são considerados violação grave do Código de Ética e Conduta da EON e sujeitam o infrator a medidas disciplinares.
+
+### 13.4 Como você pode preservar seu próprio anonimato
+
+A EON faz a sua parte (não solicita dados de identificação, descarta o IP, não usa cookies de rastreamento), mas algumas escolhas dependem de você. Recomendações para reforçar o anonimato ao registrar uma denúncia:
+
+- **Use uma rede e dispositivo neutros:** evite registrar a denúncia a partir de redes corporativas ou de equipamentos fornecidos pela EON, que podem ser auditados internamente por outros motivos. Uma rede pública ou doméstica é preferível.
+- **Considere navegação privada/anônima** do navegador, para evitar que histórico ou cache local fiquem armazenados no dispositivo após o envio.
+- **Não inclua dados de identificação próprios no relato** (seu nome, e-mail pessoal, telefone, CPF ou matrícula) se desejar permanecer anônimo. Caso esses dados sejam voluntariamente colocados, serão tratados como parte do conteúdo da denúncia.
+- **Cuidado com metadados de arquivos anexados:** documentos do Office, PDFs gerados por scanner, áudios e fotos podem conter metadados (autor, GPS, dispositivo, data) que indiretamente o identifiquem. Se desejar, remova-os antes do envio.
+- **Não compartilhe o registro da denúncia com terceiros:** não há canal de acompanhamento posterior; preservar o anonimato depende de você não distribuir informações que vinculem você ao ato de denunciar.
+
+Estas recomendações são **opcionais** e voltadas a denunciantes que queiram reforçar o próprio anonimato. Mesmo sem adotá-las, a EON mantém integralmente as garantias técnicas e contratuais previstas nesta Política.
 
 ---
 
