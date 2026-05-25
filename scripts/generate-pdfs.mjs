@@ -27,6 +27,11 @@ const docs = [
     dst: path.join(ROOT, 'public', 'politica-de-protecao-de-dados.pdf'),
     title: 'Política de Proteção de Dados — Portal de Integridade EON',
   },
+  {
+    src: path.join(ROOT, 'CODIGO-DE-CONDUTA-E-ETICA.md'),
+    dst: path.join(ROOT, 'public', 'codigo-de-conduta-e-etica.pdf'),
+    title: 'Código de Conduta e Ética — Portal de Integridade EON',
+  },
 ]
 
 /* Identidade visual alinhada ao Portal (paleta EON + tipografia Inter). */

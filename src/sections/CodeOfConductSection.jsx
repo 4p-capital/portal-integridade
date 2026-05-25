@@ -19,7 +19,12 @@ export default function CodeOfConductSection() {
         Ética e Conduta para conhecimento.
       </p>
 
-      <a className="link-card" href="#" onClick={(e) => e.preventDefault()}>
+      <a
+        className="link-card"
+        href="/codigo-de-conduta-e-etica.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <span className="link-card__icon"><IconDoc /></span>
         <span className="link-card__text">
           <strong>Código de Ética e Conduta</strong>
