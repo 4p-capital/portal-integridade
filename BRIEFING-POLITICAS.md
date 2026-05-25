@@ -17,7 +17,7 @@
 | Nome | EON *(razão social oficial a confirmar)* | confirmar razão social formal |
 | CNPJ | **17.958.805/0001-45** ✅ | |
 | Endereço | **Setor de Autarquias Sul, Quadra 4, Bloco A, Sala 602 — Asa Sul, Brasília/DF, CEP 70070-938** ✅ | |
-| E-mail institucional | `denuncias@eonbr.com` | grupo do Workspace com os 4 diretores; usado no rodapé do site e como destino das denúncias |
+| E-mail institucional | `denuncia@eonbr.com` | grupo do Workspace com os 4 diretores; usado no rodapé do site e como destino das denúncias |
 | E-mail de TI | `tecnologia@eonbr.com` | usado na seção LGPD do site |
 | Encarregado de Dados (DPO) | **Guilherme Rocha** ✅ | designado conforme art. 41 LGPD |
 | E-mail do DPO | `tecnologia@eonbr.com` ✅ | canal oficial para titulares exercerem direitos |
@@ -75,7 +75,7 @@ Operacionalmente: nem o front-end nem usuários comuns conseguem ler denúncias 
    - DESCARTA o IP do visitante (não grava nem propaga)
    - Salva denúncia no banco (com RLS de INSERT público anônimo)
    - Salva anexos no Supabase Storage (bucket privado)
-   - Envia e-mail via SMTP Workspace (noreply@eonbr.com → grupo denuncias@eonbr.com)
+   - Envia e-mail via SMTP Workspace (noreply@eonbr.com → grupo denuncia@eonbr.com)
         ↓
 4. E-mail aos diretores contém:
    - Conteúdo COMPLETO da denúncia (decisão da EON)
@@ -89,7 +89,7 @@ Operacionalmente: nem o front-end nem usuários comuns conseguem ler denúncias 
 - **Sem protocolo de acompanhamento:** ✅ definido — o sistema **não gera protocolo** nem oferece consulta pelo denunciante. A denúncia é enviada em modelo *fire-and-forget*: o denunciante apenas recebe uma confirmação de envio.
 - **Auth dos diretores no painel:** Supabase Auth — *modalidade a definir (magic link recomendado para 4 usuários fixos, com 2FA obrigatório)*
 - **Envio de e-mail:** SMTP do **Google Workspace** ✅ (remetente: `noreply@eonbr.com`; relay `smtp-relay.gmail.com:587` autenticado)
-- **Destinatário das notificações:** **grupo do Workspace `denuncias@eonbr.com`** ✅ — contém os 4 diretores; mudança de diretor = atualizar membros do grupo (sem redeploy)
+- **Destinatário das notificações:** **grupo do Workspace `denuncia@eonbr.com`** ✅ — contém os 4 diretores; mudança de diretor = atualizar membros do grupo (sem redeploy)
 - **Backups:** Point-in-Time Recovery de 30 dias (incluído no plano Pro) ✅
 
 ### 2.3 Acompanhamento de denúncia pelo denunciante
@@ -430,7 +430,7 @@ A Política de Proteção de Dados (a do canal) precisa se alinhar com:
 > - **Supabase Inc.** (EUA, datacenter São Paulo) — banco, storage, edge functions, auth
 > - **Vercel Inc.** (EUA, edge global) — hospedagem do front
 > - **Google LLC — Google Workspace** (EUA) — recebimento e armazenamento das denúncias completas nas 4 caixas dos diretores
-> - **SMTP do Google Workspace** (envio via `noreply@eonbr.com`, destinatário grupo `denuncias@eonbr.com`)
+> - **SMTP do Google Workspace** (envio via `noreply@eonbr.com`, destinatário grupo `denuncia@eonbr.com`)
 > - **Google LLC** (EUA) — Google Fonts (apenas tipografia)
 >
 > ### Encarregado de Dados (DPO)

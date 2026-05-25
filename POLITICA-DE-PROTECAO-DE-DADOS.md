@@ -157,7 +157,7 @@ O conteúdo completo das denúncias — incluindo o relato e os anexos — é co
 A denúncia, ao ser registrada:
 
 1. É **armazenada** no banco de dados da EON (Supabase, ver Seção 9)
-2. É **enviada por e-mail** ao grupo corporativo `denuncias@eonbr.com`, do qual fazem parte exclusivamente os 4 (quatro) diretores integrantes do Comitê de Ética e Integridade
+2. É **enviada por e-mail** ao grupo corporativo `denuncia@eonbr.com`, do qual fazem parte exclusivamente os 4 (quatro) diretores integrantes do Comitê de Ética e Integridade
 
 Os 4 diretores estão vinculados a **Termo de Confidencialidade** específico para o tratamento de denúncias, com vigência que sobrevive ao desligamento do diretor da Empresa.
 
@@ -181,7 +181,7 @@ A EON utiliza os seguintes operadores no tratamento de dados do Canal de Denúnc
 | **Supabase Inc.** | EUA (matriz) / Brasil (datacenter São Paulo — `sa-east-1`) | Banco de dados PostgreSQL, armazenamento de anexos, processamento das denúncias | **DPA assinado pela EON** ([Supabase DPA](https://supabase.com/legal/dpa)) + Standard Contractual Clauses + certificação SOC 2 Type II |
 | **Amazon Web Services (AWS)** | Brasil (datacenter São Paulo) | Infraestrutura subjacente do Supabase | Sub-operador coberto pelo DPA assinado com o Supabase |
 | **Vercel Inc.** | EUA (matriz) / Edge global com PoP em São Paulo | Hospedagem do front-end do Portal | **DPA assinado pela EON** ([Vercel DPA](https://vercel.com/legal/dpa)) + Standard Contractual Clauses |
-| **Google LLC — Google Workspace** | EUA (matriz) / Datacenters globais | Recebimento e armazenamento dos e-mails do grupo `denuncias@eonbr.com` (composto pelos 4 diretores) **e** envio das notificações pela Edge Function da Supabase via SMTP autenticado (remetente `noreply@eonbr.com`) | **DPA assinado pela EON** ([Google Cloud DPA](https://workspace.google.com/terms/dpa_terms.html)) + Standard Contractual Clauses |
+| **Google LLC — Google Workspace** | EUA (matriz) / Datacenters globais | Recebimento e armazenamento dos e-mails do grupo `denuncia@eonbr.com` (composto pelos 4 diretores) **e** envio das notificações pela Edge Function da Supabase via SMTP autenticado (remetente `noreply@eonbr.com`) | **DPA assinado pela EON** ([Google Cloud DPA](https://workspace.google.com/terms/dpa_terms.html)) + Standard Contractual Clauses |
 
 A EON realiza diligência prévia (*due diligence*) ao contratar operadores e exige a celebração de instrumento que garanta o tratamento conforme as suas instruções (art. 39 LGPD). A EON **firmou o Data Processing Addendum (DPA)** com seus principais operadores — **Supabase Inc., Vercel Inc. e Google LLC (Google Workspace)** — estabelecendo formalmente as obrigações de tratamento, segurança, notificação de incidentes e devolução/eliminação dos dados ao término do contrato.
 
@@ -377,7 +377,7 @@ Esta Política é regida pela legislação brasileira. Fica eleito o foro da Com
 |---|---|
 | **Encarregado (DPO)** | Guilherme Rocha |
 | **E-mail do DPO** | tecnologia@eonbr.com |
-| **Canal institucional** | denuncias@eonbr.com |
+| **Canal institucional** | denuncia@eonbr.com |
 | **E-mail de TI** | tecnologia@eonbr.com |
 | **Empresa** | EON Incorporadora |
 | **CNPJ** | 17.958.805/0001-45 |

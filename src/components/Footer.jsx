@@ -15,7 +15,7 @@ export default function Footer() {
         <div className="site-footer__col">
           <span className="site-footer__title">Canal de Denúncias</span>
           <p>Denúncias e dúvidas tratadas com sigilo e sem retaliação.</p>
-          <p>denuncias@eonbr.com</p>
+          <p>denuncia@eonbr.com</p>
         </div>
       </div>
 

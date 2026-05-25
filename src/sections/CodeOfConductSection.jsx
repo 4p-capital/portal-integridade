@@ -1,6 +1,6 @@
 import { IconDoc, IconArrow } from './icons'
 
-export default function CodeOfConductSection() {
+export default function CodeOfConductSection({ onNavigate }) {
   return (
     <section className="section">
       <span className="eyebrow">Lei nº 12.846/2013</span>
@@ -32,6 +32,17 @@ export default function CodeOfConductSection() {
         </span>
         <IconArrow className="link-card__arrow" style={{ width: 20, height: 20 }} />
       </a>
+
+      <div className="section-cta">
+        <button
+          type="button"
+          className="btn btn--primary btn--pulse"
+          onClick={() => onNavigate('canal')}
+        >
+          Fazer uma denúncia anônima
+          <IconArrow style={{ width: 16, height: 16, verticalAlign: -3, marginLeft: 8 }} />
+        </button>
+      </div>
     </section>
   )
 }

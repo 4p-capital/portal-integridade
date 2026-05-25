@@ -68,7 +68,7 @@
 }
 
 .site-footer__logo {
-  height: 30px;
+  height: 24px;
   width: auto;
   display: block;
 }
@@ -96,5 +96,5 @@
     gap: 16px;
     padding: 22px 18px;
   }
-  .site-footer__logo { height: 24px; }
+  .site-footer__logo { height: 20px; }
 }

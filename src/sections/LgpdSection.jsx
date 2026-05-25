@@ -13,7 +13,7 @@ const policies = [
   },
 ]
 
-export default function LgpdSection() {
+export default function LgpdSection({ onNavigate }) {
   return (
     <section className="section">
       <span className="eyebrow">Lei nº 13.709/2018</span>
@@ -69,6 +69,17 @@ export default function LgpdSection() {
       <div className="info-box">
         <h4>Contato — Tecnologia da Informação</h4>
         <p>tecnologia@eonbr.com</p>
+      </div>
+
+      <div className="section-cta">
+        <button
+          type="button"
+          className="btn btn--primary btn--pulse"
+          onClick={() => onNavigate('canal')}
+        >
+          Fazer uma denúncia anônima
+          <IconArrow style={{ width: 16, height: 16, verticalAlign: -3, marginLeft: 8 }} />
+        </button>
       </div>
     </section>
   )

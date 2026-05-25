@@ -1,3 +1,5 @@
+import { IconArrow } from './icons'
+
 const responsibilities = [
   {
     title: 'Recebimento e Apuração de Denúncias:',
@@ -46,7 +48,7 @@ const responsibilities = [
   },
 ]
 
-export default function CommitteeSection() {
+export default function CommitteeSection({ onNavigate }) {
   return (
     <section className="section">
       <span className="eyebrow">Governança</span>
@@ -75,6 +77,17 @@ export default function CommitteeSection() {
           </li>
         ))}
       </ul>
+
+      <div className="section-cta">
+        <button
+          type="button"
+          className="btn btn--primary btn--pulse"
+          onClick={() => onNavigate('canal')}
+        >
+          Fazer uma denúncia anônima
+          <IconArrow style={{ width: 16, height: 16, verticalAlign: -3, marginLeft: 8 }} />
+        </button>
+      </div>
     </section>
   )
 }
