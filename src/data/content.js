@@ -28,6 +28,7 @@ export const reportCategories = [
 
 /* Tipos de vínculo do denunciante com o grupo. */
 export const bondTypes = [
+  'Colaborador',
   'Prestador de serviço direto/indireto',
   'Terceiro',
   'Fornecedor',
