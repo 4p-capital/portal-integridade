@@ -80,7 +80,12 @@ export default function ReportChannelSection() {
           inadequadas, comportamentos antiéticos ou violações dos nossos
           valores e políticas.
         </p>
+      </div>
 
+      {/* formulário de denúncia anônima */}
+      <ReportForm />
+
+      <div style={{ maxWidth: 760 }}>
         <h3 className="subheading">Como funciona</h3>
         <ol className="list">
           {howItWorks.map((item) => (
@@ -109,9 +114,6 @@ export default function ReportChannelSection() {
           respeito, confiança e justiça para todos.
         </p>
       </div>
-
-      {/* formulário de denúncia anônima */}
-      <ReportForm />
     </section>
   )
 }
