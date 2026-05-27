@@ -180,6 +180,14 @@ export default function ReportForm() {
                 endereço de IP. Sua identidade é preservada do início ao fim
                 do processo.
               </p>
+              <strong style={{ display: 'block', marginTop: 10 }}>
+                Enviado exclusivamente aos 4 diretores
+              </strong>
+              <p>
+                O relato vai direto ao Comitê de Ética e Integridade da EON
+                formado pelos 4 diretores. Nenhuma outra pessoa tem acesso ao
+                conteúdo.
+              </p>
             </div>
           </div>
 
