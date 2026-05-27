@@ -27,7 +27,7 @@ export default function Header() {
               strokeLinejoin="round"
             />
           </svg>
-          EON - Integridade
+          EON - Transparência
         </span>
 
         <span className="site-header__tag">Canal 100% anônimo</span>
@@ -36,7 +36,7 @@ export default function Header() {
       {/* texto principal do header */}
       <div className="site-header__hero">
         <p className="site-header__eyebrow">Programa de Integridade</p>
-        <h1 className="site-header__title">Portal de Integridade</h1>
+        <h1 className="site-header__title">Portal de Transparência</h1>
         <p className="site-header__text">
           Acreditamos que o crescimento sustentável de uma empresa está
           diretamente ligado à ética, transparência, responsabilidade e

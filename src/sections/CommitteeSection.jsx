@@ -2,19 +2,19 @@ import { IconArrow } from './icons'
 
 const responsibilities = [
   {
-    title: 'Recebimento e Apuração de Denúncias:',
+    title: 'Recebimento e Apuração de Relatos:',
     text:
-      'O comitê é responsável por receber e investigar todas as denúncias ' +
-      'feitas, de maneira confidencial e segura. Isso pode ser feito por ' +
-      'meio de canais internos, como nossa plataforma de denúncias, ou por ' +
-      'outros meios disponíveis. Cada denúncia é tratada com a máxima ' +
+      'O comitê é responsável por receber e investigar todos os relatos ' +
+      'feitos, de maneira confidencial e segura. Isso pode ser feito por ' +
+      'meio de canais internos, como nosso Canal de Transparência, ou por ' +
+      'outros meios disponíveis. Cada relato é tratado com a máxima ' +
       'seriedade, seguindo um processo justo e rigoroso.',
   },
   {
     title: 'Garantia de Imparcialidade e Transparência:',
     text:
       'O comitê atua de forma totalmente independente, garantindo que ' +
-      'todos os envolvidos, sejam denunciantes ou acusados, recebam ' +
+      'todos os envolvidos, sejam relatores ou acusados, recebam ' +
       'tratamento justo. Nosso processo de apuração é transparente e ' +
       'ético, respeitando a privacidade e os direitos de todos os ' +
       'indivíduos.',
@@ -22,7 +22,7 @@ const responsibilities = [
   {
     title: 'Análise e Recomendações:',
     text:
-      'Após a apuração das denúncias, o comitê analisa as evidências e ' +
+      'Após a apuração dos relatos, o comitê analisa as evidências e ' +
       'fatos, tomando as ações apropriadas conforme a gravidade da ' +
       'situação. Isso pode incluir medidas disciplinares, correções de ' +
       'processos ou outras ações preventivas, visando corrigir falhas e ' +
@@ -56,15 +56,15 @@ export default function CommitteeSection({ onNavigate }) {
 
       <p className="section-lead">
         O Comitê de Ética e Integridade da empresa, composto por nossos
-        diretores, possui a responsabilidade de apurar as denúncias
-        realizadas, bem como estabelecer as medidas que serão tomadas de
+        diretores, possui a responsabilidade de apurar os relatos
+        realizados, bem como estabelecer as medidas que serão tomadas de
         acordo com a situação relatada.
       </p>
       <p>
         Trata-se de pessoas que são independentes e imparciais, responsáveis
         por promover, monitorar e garantir que todas as práticas empresariais
         estejam alinhadas aos mais elevados padrões éticos e legais, possuindo
-        um papel crucial no procedimento de apuração de denúncias
+        um papel crucial no procedimento de apuração de relatos
         relacionadas a condutas inadequadas, corrupção, fraudes ou qualquer
         violação dos nossos valores corporativos.
       </p>
@@ -84,7 +84,7 @@ export default function CommitteeSection({ onNavigate }) {
           className="btn btn--primary btn--pulse"
           onClick={() => onNavigate('canal')}
         >
-          Fazer uma denúncia anônima
+          Fazer um relato anônimo
           <IconArrow style={{ width: 16, height: 16, verticalAlign: -3, marginLeft: 8 }} />
         </button>
       </div>

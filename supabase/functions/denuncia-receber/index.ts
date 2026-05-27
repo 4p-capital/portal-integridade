@@ -1,10 +1,13 @@
 // ============================================================
-// Canal de Denúncias — recebimento, persistência e notificação.
+// Canal de Denúncias — recebimento e notificação.
 //
 // Política de anonimato:
 //   - Esta função NÃO lê, registra ou persiste o IP do cliente
 //     (x-forwarded-for, cf-connecting-ip, x-real-ip, etc.).
 //   - Não solicita nome, e-mail ou telefone do denunciante.
+//   - Os dados da denúncia NÃO são gravados em tabelas — vão direto
+//     para o e-mail dos diretores. Apenas os anexos transitam pelo
+//     Storage para gerar signed URLs entregues no e-mail.
 //   - Service role é usado apenas server-side (nunca devolvido).
 //
 // Endpoint público (verify_jwt: false): recebe multipart/form-data
@@ -22,9 +25,9 @@ const SMTP_PORT             = Number(Deno.env.get("SMTP_PORT") ?? "587");
 const SMTP_USER             = Deno.env.get("SMTP_USER")!;
 const SMTP_PASS             = Deno.env.get("SMTP_PASS")!;
 const SMTP_FROM             = Deno.env.get("SMTP_FROM") ?? "noreply@eonbr.com";
-const SMTP_FROM_NAME        = Deno.env.get("SMTP_FROM_NAME") ?? "Canal de Denúncias EON";
+const SMTP_FROM_NAME        = Deno.env.get("SMTP_FROM_NAME") ?? "Canal de Transparência EON";
 const DESTINO_EMAIL         = Deno.env.get("DENUNCIA_DESTINO_EMAIL")!;
-const SIGNED_URL_EXPIRES_S  = Number(Deno.env.get("SIGNED_URL_EXPIRES_SECONDS") ?? "2592000"); // 30 dias
+const SIGNED_URL_EXPIRES_S  = Number(Deno.env.get("SIGNED_URL_EXPIRES_SECONDS") ?? "63072000"); // 2 anos
 
 const BUCKET = "denuncias-anexos";
 
@@ -58,7 +61,9 @@ Deno.serve(async (req: Request): Promise<Response> => {
     return json({ erro: "metodo_nao_permitido" }, 405);
   }
 
-  let denunciaId: string | null = null;
+  // Protocolo gerado em memória — nenhum registro é criado em banco.
+  const denunciaId = crypto.randomUUID();
+  const criadoEm   = new Date().toISOString();
 
   try {
     const form = await req.formData();
@@ -103,25 +108,12 @@ Deno.serve(async (req: Request): Promise<Response> => {
       auth: { persistSession: false, autoRefreshToken: false },
     });
 
-    // ----- 1) grava denúncia -----
-    const { data: denuncia, error: insertErr } = await supabase
-      .from("denuncias")
-      .insert({ empresa, vinculo, categoria, data_ocorrido, local_setor, relato })
-      .select("id, criado_em")
-      .single();
-
-    if (insertErr || !denuncia) {
-      console.error("denuncia_insert_fail", insertErr?.message);
-      return json({ erro: "falha_persistencia" }, 500);
-    }
-    denunciaId = denuncia.id;
-
-    // ----- 2) upload anexos + metadados + signed URL -----
+    // ----- 1) upload anexos + signed URL -----
     const anexosInfo: { nome: string; signed_url: string; tamanho: number; mime: string }[] = [];
 
     for (const file of anexos) {
       const safeName = file.name.replace(/[^\w.\-]/g, "_").slice(0, 120);
-      const path = `${denuncia.id}/${crypto.randomUUID()}-${safeName}`;
+      const path = `${denunciaId}/${crypto.randomUUID()}-${safeName}`;
 
       const { error: upErr } = await supabase.storage
         .from(BUCKET)
@@ -129,20 +121,6 @@ Deno.serve(async (req: Request): Promise<Response> => {
       if (upErr) {
         console.error("anexo_upload_fail", upErr.message);
         return json({ erro: "falha_upload_anexo" }, 500);
-      }
-
-      const { error: metaErr } = await supabase
-        .from("denuncia_anexos")
-        .insert({
-          denuncia_id:   denuncia.id,
-          storage_path:  path,
-          nome_original: file.name,
-          tamanho_bytes: file.size,
-          mime_type:     file.type,
-        });
-      if (metaErr) {
-        console.error("anexo_meta_fail", metaErr.message);
-        return json({ erro: "falha_metadata_anexo" }, 500);
       }
 
       const { data: signed, error: signErr } = await supabase.storage
@@ -161,14 +139,14 @@ Deno.serve(async (req: Request): Promise<Response> => {
       });
     }
 
-    // ----- 3) e-mail para o Comitê de Ética -----
+    // ----- 2) e-mail para o Comitê de Ética -----
     const html = montarEmailHtml({
-      id: denuncia.id,
-      criado_em: denuncia.criado_em,
+      id: denunciaId,
+      criado_em: criadoEm,
       empresa, vinculo, categoria,
       data_ocorrido, local_setor, relato,
       anexos: anexosInfo,
-      expiracaoLinksDias: Math.floor(SIGNED_URL_EXPIRES_S / 86400),
+      expiracaoLinksTexto: fmtExpiracao(SIGNED_URL_EXPIRES_S),
     });
 
     const transporter = nodemailer.createTransport({
@@ -182,7 +160,7 @@ Deno.serve(async (req: Request): Promise<Response> => {
       await transporter.sendMail({
         from: `"${SMTP_FROM_NAME}" <${SMTP_FROM}>`,
         to: DESTINO_EMAIL,
-        subject: `[Canal de Denúncias] ${categoria} — ${empresa}`,
+        subject: `[Canal de Transparência] ${categoria} — ${empresa}`,
         html,
       });
     } finally {
@@ -224,6 +202,19 @@ function fmtBytes(b: number): string {
   return `${(b / 1024 / 1024).toFixed(1)} MB`;
 }
 
+function fmtExpiracao(seconds: number): string {
+  const days = Math.floor(seconds / 86400);
+  if (days >= 365 && days % 365 === 0) {
+    const anos = days / 365;
+    return anos === 1 ? "1 ano" : `${anos} anos`;
+  }
+  if (days >= 30 && days % 30 === 0) {
+    const meses = days / 30;
+    return meses === 1 ? "1 mês" : `${meses} meses`;
+  }
+  return days === 1 ? "1 dia" : `${days} dias`;
+}
+
 // "25/05/2026 às 13:42" em hora de Brasília
 function fmtData(iso: string): string {
   const d = new Date(iso);
@@ -248,7 +239,7 @@ function montarEmailHtml(d: {
   local_setor: string | null;
   relato: string;
   anexos: { nome: string; signed_url: string; tamanho: number; mime: string }[];
-  expiracaoLinksDias: number;
+  expiracaoLinksTexto: string;
 }): string {
   // Tokens da identidade do portal (espelham src/styles/global.css)
   const c = {
@@ -285,7 +276,7 @@ function montarEmailHtml(d: {
         Anexos · ${d.anexos.length}
       </div>
       <div style="font-size:11px;color:${c.inkFaint};margin:0 0 14px;">
-        Links válidos por ${d.expiracaoLinksDias} dias.
+        Links válidos por ${d.expiracaoLinksTexto}.
       </div>
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid ${c.line};border-radius:10px;border-collapse:separate;">
         ${d.anexos.map((a, i) => {
@@ -307,7 +298,7 @@ function montarEmailHtml(d: {
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Nova denúncia · Canal de Integridade EON</title>
+  <title>Novo relato · Canal de Transparência EON</title>
 </head>
 <body style="margin:0;padding:0;background:${c.bg};font-family:${font};color:${c.ink};line-height:1.55;-webkit-font-smoothing:antialiased;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${c.bg};padding:32px 16px;">
@@ -319,10 +310,10 @@ function montarEmailHtml(d: {
         <tr>
           <td style="background:${c.brand900};padding:28px 32px 24px;color:#ffffff;">
             <div style="font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:${c.goldOnDark};font-weight:600;margin:0 0 8px;">
-              Canal de Integridade · EON
+              Canal de Transparência · EON
             </div>
             <div style="font-size:22px;font-weight:700;letter-spacing:.2px;line-height:1.25;">
-              Nova denúncia recebida
+              Novo relato recebido
             </div>
           </td>
         </tr>
@@ -342,7 +333,7 @@ function montarEmailHtml(d: {
               </tr>
               <tr>
                 <td>
-                  <span style="font-weight:600;color:${c.ink};text-transform:uppercase;letter-spacing:.4px;">Recebida em</span>
+                  <span style="font-weight:600;color:${c.ink};text-transform:uppercase;letter-spacing:.4px;">Recebido em</span>
                   &nbsp;${escapeHtml(fmtData(d.criado_em))} <span style="color:${c.inkFaint};">(horário de Brasília)</span>
                 </td>
               </tr>
@@ -383,8 +374,8 @@ function montarEmailHtml(d: {
         <!-- FOOTER do card -->
         <tr>
           <td style="background:${c.surface2};border-top:1px solid ${c.line};padding:18px 32px;font-size:11px;color:${c.inkSoft};line-height:1.55;">
-            Esta mensagem foi gerada automaticamente pelo Canal de Denúncias.
-            Em respeito ao anonimato do denunciante,
+            Esta mensagem foi gerada automaticamente pelo Canal de Transparência.
+            Em respeito ao anonimato do relator,
             <strong style="color:${c.ink};font-weight:600;">nenhum dado identificador</strong>
             (IP, nome, e-mail ou telefone) é coletado ou armazenado.
           </td>
@@ -396,7 +387,7 @@ function montarEmailHtml(d: {
       <table role="presentation" width="620" cellpadding="0" cellspacing="0" border="0" style="max-width:620px;width:100%;margin-top:14px;">
         <tr>
           <td align="center" style="font-size:11px;color:${c.inkFaint};letter-spacing:.4px;padding:8px 16px;">
-            EON · Canal de Integridade
+            EON · Canal de Transparência
           </td>
         </tr>
       </table>

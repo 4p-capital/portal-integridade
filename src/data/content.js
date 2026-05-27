@@ -8,13 +8,13 @@
 export const navItems = [
   { id: 'etica',        label: 'Ética e Integridade' },
   { id: 'codigo',       label: 'Código de Ética e Conduta' },
-  { id: 'canal',        label: 'Canal de Denúncias', highlight: true },
+  { id: 'canal',        label: 'Canal de Transparência', highlight: true },
   { id: 'comite',       label: 'Comitê de Ética e Integridade' },
   { id: 'lgpd',         label: 'LGPD' },
   // { id: 'documentacao', label: 'Documentação' },
 ]
 
-/* Categorias de denúncia. */
+/* Categorias do relato. */
 export const reportCategories = [
   'Assédio moral ou sexual',
   'Fraude ou desvio financeiro',
@@ -26,7 +26,7 @@ export const reportCategories = [
   'Outros',
 ]
 
-/* Tipos de vínculo do denunciante com o grupo. */
+/* Tipos de vínculo do relator com o grupo. */
 export const bondTypes = [
   'Colaborador',
   'Prestador de serviço direto/indireto',
@@ -44,6 +44,6 @@ export const documents = [
   'Política de Conflito de Interesses',
   'Política de Brindes e Hospitalidades',
   'Regimento do Comitê de Ética',
-  'Manual do Canal de Denúncias',
+  'Manual do Canal de Transparência',
   'Política de Compliance',
 ]

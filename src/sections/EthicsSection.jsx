@@ -73,7 +73,7 @@ export default function EthicsSection({ onNavigate }) {
           className="btn btn--primary btn--pulse"
           onClick={() => onNavigate('canal')}
         >
-          Fazer uma denúncia anônima
+          Fazer um relato anônimo
           <IconArrow style={{ width: 16, height: 16, verticalAlign: -3, marginLeft: 8 }} />
         </button>
         <button

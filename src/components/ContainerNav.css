@@ -53,7 +53,7 @@
   box-shadow: 0 0 12px rgba(188, 171, 143, .45);
 }
 
-/* ---- item em destaque (Canal de Denúncias) ----
+/* ---- item em destaque (Canal de Transparência) ----
    Estilo "live indicator": dot verde pulsante à esquerda do texto,
    alinhado com a tag "Canal 100% anônimo" do header.
    O dot vive no ::before — o ::after segue dedicado ao indicador

@@ -17,7 +17,7 @@ const EMPTY = {
 const ACCEPT = 'image/*,video/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt'
 const MAX_TOTAL = 20 * 1024 * 1024 // 20 MB
 
-/* Endpoint da Edge Function que recebe a denúncia. */
+/* Endpoint da Edge Function que recebe o relato. */
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
 const ENDPOINT = `${SUPABASE_URL}/functions/v1/denuncia-receber`
@@ -111,9 +111,9 @@ export default function ReportForm() {
     }
 
     /* --------------------------------------------------------------
-       A Edge Function "denuncia-receber" descarta o IP do denunciante,
-       grava a denúncia no banco e dispara o e-mail para o Comitê de
-       Ética. Como há anexos, o envio usa FormData (multipart/form-data).
+       A Edge Function "denuncia-receber" descarta o IP do relator
+       e envia o relato (com anexos) por e-mail ao Comitê de Ética.
+       Como há anexos, o envio usa FormData (multipart/form-data).
     -------------------------------------------------------------- */
     const dados = new FormData()
     dados.append('empresa', form.empresa)
@@ -144,7 +144,7 @@ export default function ReportForm() {
       })
     } catch (err) {
       setSubmitError(
-        'Não foi possível enviar sua denúncia agora. Verifique sua conexão e tente novamente em alguns instantes.',
+        'Não foi possível enviar seu relato agora. Verifique sua conexão e tente novamente em alguns instantes.',
       )
     } finally {
       setSubmitting(false)
@@ -162,7 +162,7 @@ export default function ReportForm() {
   return (
     <div className="report" id="formulario">
       <div className="report__head">
-        <h3 className="report__heading">Registrar denúncia</h3>
+        <h3 className="report__heading">Registrar relato</h3>
         <p className="report__subheading">
           Preencha o formulário abaixo. Você não precisa se identificar.
         </p>
@@ -174,7 +174,7 @@ export default function ReportForm() {
           <div className="anon-banner">
             <span className="anon-banner__icon"><IconShield /></span>
             <div>
-              <strong>Esta denúncia é 100% anônima</strong>
+              <strong>Este relato é 100% anônimo</strong>
               <p>
                 Não solicitamos nome, e-mail ou telefone e não registramos
                 endereço de IP. Sua identidade é preservada do início ao fim
@@ -216,9 +216,9 @@ export default function ReportForm() {
               </select>
             </div>
 
-            {/* Categoria da denúncia */}
+            {/* Categoria do relato */}
             <div className="field">
-              <label htmlFor="categoria">Categoria da denúncia *</label>
+              <label htmlFor="categoria">Categoria do relato *</label>
               <select
                 id="categoria"
                 name="categoria"
@@ -351,7 +351,7 @@ export default function ReportForm() {
                 aria-busy={submitting}
               >
                 {submitting && <span className="btn__spinner" aria-hidden="true" />}
-                {submitting ? 'Enviando…' : 'Enviar denúncia'}
+                {submitting ? 'Enviando…' : 'Enviar relato'}
               </button>
             </div>
           </form>
@@ -363,9 +363,9 @@ export default function ReportForm() {
         <div className="report__panel">
           <div className="report-done">
             <span className="report-done__icon"><IconCheck /></span>
-            <h4>Denúncia registrada com sucesso</h4>
+            <h4>Relato registrado com sucesso</h4>
             <p>
-              Sua denúncia foi enviada com segurança ao Comitê de Ética e
+              Seu relato foi enviado com segurança ao Comitê de Ética e
               Integridade da EON. Em respeito ao seu anonimato, não
               registramos qualquer dado que permita identificá-lo(a) e não
               há canal de acompanhamento ou consulta posterior.
@@ -376,7 +376,7 @@ export default function ReportForm() {
             </p>
 
             <button type="button" className="btn btn--ghost" onClick={resetForm}>
-              Registrar nova denúncia
+              Registrar novo relato
             </button>
           </div>
         </div>
